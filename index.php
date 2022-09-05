@@ -5,14 +5,15 @@
   if(isset($_POST['delete'])){
     // var_dump( $_POST);
     $ids = $_POST['chk_id'];
-    var_dump($ids.length);
     $cnt = 0;
     foreach($ids as $id){
       $db->delete_data($id);
       $cnt++;
     }
     if($cnt == count($ids)){
-      header('Location: index.php');
+    //   header('Location: index.php');
+    echo '<script>location.replace("index.php");</script>';
+      
     } else {
       echo '<script>alert("Error:")</script>';
     }
@@ -21,7 +22,7 @@
 
 
         <main>
-          <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?> ?> " method="POST">
+          <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']);?> " method="POST">
             <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-1 mb-4 border-bottom">
                 <h2>Product List</h2>
                 <div class="col-md-3-end">
