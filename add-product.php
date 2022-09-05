@@ -2,7 +2,7 @@
 
 <?php
 $skuErr = $nameErr = $priceErr = '';
-$sku = $name = $price = $size = $weight = $height = $width = $length = '';
+$sku = $name = $price = $size = $weight = $height = $width = $length = '0';
 if(isset($_POST['submit'])){
     // Validate SKU
     if(empty($_POST['sku'])){
@@ -24,18 +24,29 @@ if(isset($_POST['submit'])){
     } else {
       $price = filter_input(INPUT_POST, 'price', FILTER_SANITIZE_NUMBER_INT);
     }
-    $size = filter_input(INPUT_POST, 'size', FILTER_SANITIZE_NUMBER_INT);
-    $weight = filter_input(INPUT_POST, 'weight', FILTER_SANITIZE_NUMBER_INT);
-    $height = filter_input(INPUT_POST, 'height', FILTER_SANITIZE_NUMBER_INT);
-    $width = filter_input(INPUT_POST, 'width', FILTER_SANITIZE_NUMBER_INT);
-    $length = filter_input(INPUT_POST, 'length', FILTER_SANITIZE_NUMBER_INT);
-
+    
+    if(!empty($_POST['size'])){
+      $size = filter_input(INPUT_POST, 'size', FILTER_SANITIZE_NUMBER_INT);
+      $height = $weight = $width = $length = '0';
+    }
+    elseif(!empty($_POST['weight'])){
+      $weight = filter_input(INPUT_POST, 'weight', FILTER_SANITIZE_NUMBER_INT);
+        $height = $size = $width = $length = '0';
+    }
+    else{
+        $height = filter_input(INPUT_POST, 'height', FILTER_SANITIZE_NUMBER_INT);
+        $width = filter_input(INPUT_POST, 'width', FILTER_SANITIZE_NUMBER_INT);
+        $length = filter_input(INPUT_POST, 'length', FILTER_SANITIZE_NUMBER_INT);
+        $size = $weight = '0';
+    }
+    
     if(empty($skuErr) && empty($nameErr) && empty($priceErr)){
         $result = $db->insert_data($sku, $name, $price, $size, $height, $width, $length, $weight);
         if($result){
-            header('Location: index.php');
+            // header('Location: index.php');
+            echo '<script>location.replace("index.php");</script>';
         } else {
-          echo '<script>alert("Error: '.$sql.'<br>'.mysqli_error($db->get_connection()).'")</script>';
+          echo '<script>alert("Error!!!")</script>';
         }
     }
     
@@ -49,7 +60,7 @@ if(isset($_POST['submit'])){
         <main>
             <div class="row justify-content-start my-5">
                 <div class="col-lg-6"> 
-                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" id="product_form" method="POST">
+                    <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']);?>" id="product_form" method="POST">
                         <div class="mb-3">
                             <label for="sku" class="form-label" >SKU</label>
                             <input type="text" class="form-control <?php echo $skuErr ? 'is-invalid' : null ?>" id="sku" name="sku">
