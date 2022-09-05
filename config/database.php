@@ -1,7 +1,7 @@
 <?php
 class Database
 {
-    // define variables
+    // variables
     private $host = "localhost";
     private $username = "root";
     private $password = "";
@@ -20,7 +20,7 @@ class Database
     {
         return $this->conn;
     }
-
+    // function to get data 
     public function get_data()
     {
         $sql = 'SELECT * FROM product';
@@ -29,7 +29,7 @@ class Database
         return $data;
     }
 
-    // create function to insert data
+    // function to insert data
     public function insert_data($sku, $name, $price, $size, $height, $width, $length, $weight)
     {
         $sql = "INSERT INTO product (sku, name, price, size, height, width, length, weight) VALUES ('$sku', '$name', '$price', '$size', '$height', '$width', '$length', '$weight')";
@@ -37,7 +37,7 @@ class Database
         return $result;
     }
 
-    // create function to delete data
+    // function to delete data
     public function delete_data($id)
     {
         $sql = "DELETE FROM product WHERE sku = '$id'";
@@ -45,7 +45,7 @@ class Database
         return $result;
     }
 
-    // create function to close connection
+    //function to close connection
     public function close_connection()
     {
         mysqli_close($this->conn);
