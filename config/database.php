@@ -1,11 +1,11 @@
 <?php
 class Database
 {
-    // variables
+    // define variables
     private $host = "localhost";
-    private $username = "root";
-    private $password = "";
-    private $database = "products";
+    private $username = "id19513051_root";
+    private $password = "INy/mk9/#@Gp|O*g";
+    private $database = "id19513051_products";
     private $conn;
 
     public function __construct()
@@ -15,12 +15,14 @@ class Database
             die("Connection failed: " . mysqli_connect_error());
         }
     }
-
+    
+    // function to get connection     
     public function get_connection()
     {
         return $this->conn;
     }
-    // function to get data 
+    
+    // function to get data     
     public function get_data()
     {
         $sql = 'SELECT * FROM product';
@@ -45,7 +47,7 @@ class Database
         return $result;
     }
 
-    //function to close connection
+    // function to close connection
     public function close_connection()
     {
         mysqli_close($this->conn);
